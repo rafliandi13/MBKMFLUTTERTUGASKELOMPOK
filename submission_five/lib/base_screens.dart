@@ -6,14 +6,27 @@ import 'provider.dart';
 import 'model.dart';
 
 class BaseScreen extends StatelessWidget {
-  String title,description;
-  BaseScreen({Key? key, required this.title,required this.description}) : super(key: key);
+  String title, description;
+
+  BaseScreen({Key? key, required this.title, required this.description})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue[500],
-      appBar: AppBar(title: Text('ContactApp'),),
+      appBar: AppBar(
+        title: Text('ContactApp'),
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Provider.of<ListProvider>(context, listen: false)
+                    .addItem(title, description);
+              },
+              icon: Icon(Icons.refresh))
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Consumer<ListProvider>(
@@ -26,10 +39,7 @@ class BaseScreen extends StatelessWidget {
                     },
                   )
                 : GestureDetector(
-                    onTap: () {
-                      Provider.of<ListProvider>(context, listen: false)
-                          .addItem(title, description);
-                    },
+                    onTap: () {},
                     child: Center(
                         child: Text(
                       "ADD CONTACT",
@@ -42,7 +52,8 @@ class BaseScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailScreen()));
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => DetailScreen(title: '',description: '',)));
         },
         backgroundColor: Colors.white,
         child: Icon(
@@ -66,63 +77,27 @@ class CardList extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(2.0),
       child: Container(
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(10),
-                topLeft: Radius.circular(10),
-              )),
-          child: ListTile(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(10),
+              topLeft: Radius.circular(10),
+            )),
+        child: ListTile(
+            onTap: (){
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => DetailScreen(title: list.title,description: list.description,)));
+            },
             leading: Icon(Icons.people),
             title: Text(list.title),
             subtitle: Text(list.description),
-            trailing: IconButton(onPressed: () {
-              Provider.of<ListProvider>(context, listen: false)
-                  .deleteItem(index);
-            }, icon: Icon(Icons.delete))
-          ),
-        ),
+            trailing: IconButton(
+                onPressed: () {
+                  Provider.of<ListProvider>(context, listen: false)
+                      .deleteItem(index);
+                },
+                icon: Icon(Icons.delete))),
+      ),
     );
   }
-}
-
-showAlertDialog(BuildContext context) {
-  TextEditingController _Title = TextEditingController();
-  TextEditingController _Description = TextEditingController();
-  // Create button
-  Widget okButton = FlatButton(
-    child: Text("ADD CONTACT"),
-    onPressed: () {
-
-    },
-  );
-
-  // Create AlertDialog
-  AlertDialog alert = AlertDialog(
-    title: Text("ADD A NEW CONTACT "),
-    content: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        TextField(
-          controller: _Title,
-          decoration: InputDecoration(hintText: "Enter Name"),
-        ),
-        TextField(
-          controller: _Description,
-          decoration: InputDecoration(hintText: "Enter Mobile Phone Number"),
-        ),
-      ],
-    ),
-    actions: [
-      okButton,
-    ],
-  );
-
-  // show the dialog
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
 }

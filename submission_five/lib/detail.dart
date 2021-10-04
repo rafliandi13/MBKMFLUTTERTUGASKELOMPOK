@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:submission_five/base_screens.dart';
 import 'provider.dart';
-import 'model.dart';
 class DetailScreen extends StatefulWidget {
+  String title,description;
+  DetailScreen({Key? key, required this.title,required this.description});
   @override
   _DetailScreenState createState() => _DetailScreenState();
 }
@@ -31,7 +32,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       controller: _Title,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        hintText: "Enter Name",
+                        hintText:  widget.title,
                         contentPadding: EdgeInsets.all(20.0),
                       ),
                       validator: (value) {
@@ -46,7 +47,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       controller: _Description,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        hintText: "Enter Phone Number",
+                        hintText: widget.title,
                         contentPadding: EdgeInsets.all(20.0),
                       ),
                       validator: (value) {
@@ -63,9 +64,14 @@ class _DetailScreenState extends State<DetailScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
                   onPressed: () {
+                    // Provider.of<ListProvider>(context,listen: false).addItem(_Title.text, _Description.text);
                     if (_formKey.currentState!.validate()) {
-
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => BaseScreen(title: _Title.text,description: _Description.text,)));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ChangeNotifierProvider<ListProvider>(
+                            create: (context) => ListProvider(), child: BaseScreen(title: _Title.text,description: _Description.text,)
+                        )),
+                      );
 
                     }
                   },
