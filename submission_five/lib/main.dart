@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:submission_five/base_screens.dart';
+import 'base_screens.dart';
+import 'package:provider/provider.dart';
+import 'provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +16,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: BaseScreen(),
+      home: ChangeNotifierProvider<ListProvider>(
+          create: (context) => ListProvider(), child: BaseScreen(title: '',description: '',)),
     );
   }
 }
