@@ -4,7 +4,8 @@ import 'package:provider/provider.dart';
 import 'provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider<ListProvider>(
+      create: (context) => ListProvider(), child: MyApp(),));
 }
 
 class MyApp extends StatelessWidget {

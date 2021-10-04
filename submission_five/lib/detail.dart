@@ -47,7 +47,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       controller: _Description,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        hintText: widget.title,
+                        hintText: widget.description,
                         contentPadding: EdgeInsets.all(20.0),
                       ),
                       validator: (value) {
@@ -64,18 +64,15 @@ class _DetailScreenState extends State<DetailScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    // Provider.of<ListProvider>(context,listen: false).addItem(_Title.text, _Description.text);
                     if (_formKey.currentState!.validate()) {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ChangeNotifierProvider<ListProvider>(
-                            create: (context) => ListProvider(), child: BaseScreen(title: _Title.text,description: _Description.text,)
-                        )),
+                        MaterialPageRoute(builder: (context) => BaseScreen(title: _Title.text,description: _Description.text,)
+                        ),
                       );
-
                     }
                   },
-                  child: Text('Add'),
+                  child: Text('Simpan'),
                 ),
               ),
             ],
