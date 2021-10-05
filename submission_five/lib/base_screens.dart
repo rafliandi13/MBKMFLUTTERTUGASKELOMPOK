@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:submission_five/detail.dart';
+import 'package:submission_five/detail_edit.dart';
 import 'provider.dart';
 import 'model.dart';
 
@@ -52,8 +53,11 @@ class BaseScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => DetailScreen(title: '',description: '',)));
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => DetailScreen(
+                    title: '',
+                    description: '',
+                  )));
         },
         backgroundColor: Colors.white,
         child: Icon(
@@ -84,9 +88,13 @@ class CardList extends StatelessWidget {
               topLeft: Radius.circular(10),
             )),
         child: ListTile(
-            onTap: (){
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => DetailScreen(title: list.title,description: list.description,)));
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => DetailScreenEdit(
+                        index: index,
+                        title: list.title,
+                        description: list.description,
+                      )));
             },
             leading: Icon(Icons.people),
             title: Text(list.title),

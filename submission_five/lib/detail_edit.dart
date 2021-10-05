@@ -4,17 +4,25 @@ import 'package:provider/provider.dart';
 import 'package:submission_five/base_screens.dart';
 import 'provider.dart';
 
-class DetailScreen extends StatefulWidget {
+class DetailScreenEdit extends StatefulWidget {
   String title, description;
-  DetailScreen({Key? key, required this.title, required this.description});
+  int index;
+  DetailScreenEdit(
+      {Key? key,
+      required this.index,
+      required this.title,
+      required this.description});
   @override
-  _DetailScreenState createState() => _DetailScreenState();
+  _DetailScreenEditState createState() => _DetailScreenEditState();
 }
 
-class _DetailScreenState extends State<DetailScreen> {
+class _DetailScreenEditState extends State<DetailScreenEdit> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   final TextEditingController _Title = TextEditingController();
   final TextEditingController _Description = TextEditingController();
+
+  int index = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,17 +77,20 @@ class _DetailScreenState extends State<DetailScreen> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       Provider.of<ListProvider>(context, listen: false)
-                          .addItem(_Title.text, _Description.text);
+                          .updateItem(index, _Title.text,
+                              _Description.text);
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => BaseScreen(
-                                title: _Title.text,
-                                description: _Description.text)),
+                                  title: _Title.text,
+                                  description: _Description.text,
+                                )),
                       );
                     }
                   },
-                  child: const Text('Simpan'),
+                  child: const Text('Edit Simpan'),
                 ),
               ),
             ],
