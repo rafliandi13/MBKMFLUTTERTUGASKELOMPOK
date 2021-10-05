@@ -4,7 +4,7 @@ import 'package:submission_five/model.dart';
 class ListProvider with ChangeNotifier {
   List<DynamicList> _list = <DynamicList>[];
 
-  List<DynamicList> get getNotes{
+  List<DynamicList> get getNotes {
     return _list;
   }
 
@@ -12,7 +12,7 @@ class ListProvider with ChangeNotifier {
 
   String get title => title;
 
-  void addItem(String title,String description) {
+  void addItem(String title, String description) {
     DynamicList list = new DynamicList(title, description);
     _list.add(list);
     notifyListeners();
@@ -20,6 +20,13 @@ class ListProvider with ChangeNotifier {
 
   void deleteItem(int index) {
     _list.removeAt(index);
+    notifyListeners();
+  }
+
+  void updateItem(int index, String title, String description) {
+    DynamicList list = new DynamicList(title, description);
+    deleteItem(index);
+    _list.insert(index, list);
     notifyListeners();
   }
 }
