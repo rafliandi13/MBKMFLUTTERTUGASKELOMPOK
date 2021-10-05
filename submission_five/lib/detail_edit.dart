@@ -1,17 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:submission_five/base_screens.dart';
+import 'base_screens.dart';
 import 'provider.dart';
 
 class DetailScreenEdit extends StatefulWidget {
   String title, description;
   int index;
+
   DetailScreenEdit(
       {Key? key,
       required this.index,
       required this.title,
       required this.description});
+
   @override
   _DetailScreenEditState createState() => _DetailScreenEditState();
 }
@@ -20,8 +22,6 @@ class _DetailScreenEditState extends State<DetailScreenEdit> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   final TextEditingController _Title = TextEditingController();
   final TextEditingController _Description = TextEditingController();
-
-  int index = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -77,8 +77,8 @@ class _DetailScreenEditState extends State<DetailScreenEdit> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       Provider.of<ListProvider>(context, listen: false)
-                          .updateItem(index, _Title.text,
-                              _Description.text);
+                          .updateItem(
+                              widget.index, _Title.text, _Description.text);
 
                       Navigator.push(
                         context,

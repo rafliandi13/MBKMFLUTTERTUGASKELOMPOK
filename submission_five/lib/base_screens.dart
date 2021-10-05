@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:submission_five/detail.dart';
-import 'package:submission_five/detail_edit.dart';
+import 'detail.dart';
+import 'detail_edit.dart';
 import 'provider.dart';
 import 'model.dart';
 
@@ -19,14 +19,6 @@ class BaseScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('ContactApp'),
         automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-              onPressed: () {
-                Provider.of<ListProvider>(context, listen: false)
-                    .addItem(title, description);
-              },
-              icon: Icon(Icons.refresh))
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

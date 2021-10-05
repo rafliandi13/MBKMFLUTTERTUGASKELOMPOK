@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:submission_five/base_screens.dart';
+import 'base_screens.dart';
 import 'provider.dart';
 
 class DetailScreen extends StatefulWidget {
   String title, description;
+
   DetailScreen({Key? key, required this.title, required this.description});
+
   @override
   _DetailScreenState createState() => _DetailScreenState();
 }
@@ -15,6 +17,7 @@ class _DetailScreenState extends State<DetailScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   final TextEditingController _Title = TextEditingController();
   final TextEditingController _Description = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

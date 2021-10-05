@@ -5,7 +5,9 @@ import 'provider.dart';
 
 void main() {
   runApp(ChangeNotifierProvider<ListProvider>(
-      create: (context) => ListProvider(), child: MyApp(),));
+    create: (context) => ListProvider(),
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -18,7 +20,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: ChangeNotifierProvider<ListProvider>(
-          create: (context) => ListProvider(), child: BaseScreen(title: '',description: '',)),
+          create: (context) => ListProvider(),
+          child: BaseScreen(
+            title: '',
+            description: '',
+          )),
     );
   }
 }
