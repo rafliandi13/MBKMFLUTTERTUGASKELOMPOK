@@ -85,13 +85,12 @@ class _DetailScreenState extends State<DetailScreen> {
                             .updateItem(
                                 widget.index, _Title.text, _Description.text);
                       }
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => BaseScreen(
-                                title: _Title.text,
-                                description: _Description.text)),
-                      );
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => BaseScreen(
+                                  title: _Title.text,
+                                  description: _Description.text)),
+                          (route) => false);
                     }
                   },
                   child: const Text('Simpan'),
