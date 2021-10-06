@@ -45,11 +45,8 @@ class BaseScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => DetailScreen(
-                    index: 0,
-                    title: '',
-                    description: '',
-                  )));
+              builder: (context) =>
+                  DetailScreen(index: 0, title: '', description: '')));
         },
         backgroundColor: Colors.white,
         child: Icon(
