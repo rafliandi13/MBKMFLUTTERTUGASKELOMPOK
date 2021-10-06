@@ -1,13 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:submission_five/model.dart';
 import 'base_screens.dart';
 import 'provider.dart';
 
 class DetailScreen extends StatefulWidget {
   String title, description;
+  int index;
 
-  DetailScreen({Key? key, required this.title, required this.description});
+  DetailScreen(
+      {Key? key,
+      required this.index,
+      required this.title,
+      required this.description});
 
   @override
   _DetailScreenState createState() => _DetailScreenState();
@@ -71,8 +77,14 @@ class _DetailScreenState extends State<DetailScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      Provider.of<ListProvider>(context, listen: false)
-                          .addItem(_Title.text, _Description.text);
+                      if (widget.index == 0 && widget.title == '') {
+                        Provider.of<ListProvider>(context, listen: false)
+                            .addItem(_Title.text, _Description.text);
+                      } else {
+                        Provider.of<ListProvider>(context, listen: false)
+                            .updateItem(
+                                widget.index, _Title.text, _Description.text);
+                      }
                       Navigator.push(
                         context,
                         MaterialPageRoute(

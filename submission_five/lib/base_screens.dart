@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'detail.dart';
-import 'detail_edit.dart';
 import 'provider.dart';
 import 'model.dart';
 
@@ -47,6 +46,7 @@ class BaseScreen extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => DetailScreen(
+                    index: 0,
                     title: '',
                     description: '',
                   )));
@@ -82,7 +82,7 @@ class CardList extends StatelessWidget {
         child: ListTile(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => DetailScreenEdit(
+                  builder: (context) => DetailScreen(
                         index: index,
                         title: list.title,
                         description: list.description,
