@@ -6,14 +6,9 @@ import 'base_screens.dart';
 import 'provider.dart';
 
 class DetailScreen extends StatefulWidget {
-  String title, description;
-  int index;
+  final DynamicList? data;
 
-  DetailScreen(
-      {Key? key,
-      required this.index,
-      required this.title,
-      required this.description});
+  DetailScreen([this.data]);
 
   @override
   _DetailScreenState createState() => _DetailScreenState();
@@ -23,6 +18,22 @@ class _DetailScreenState extends State<DetailScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   final TextEditingController _Title = TextEditingController();
   final TextEditingController _Description = TextEditingController();
+
+  bool isUpdate = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.data != null) {
+      _Title.text = widget.data!.title;
+      _Description.text = widget.data!.description;
+      isUpdate = true;
+    } else {
+      _Title.clear();
+      _Description.clear();
+      isUpdate = false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +55,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           controller: _Title,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            hintText: widget.title,
+                            labelText: "Nama",
                             contentPadding: EdgeInsets.all(20.0),
                           ),
                           validator: (value) {
@@ -57,9 +68,10 @@ class _DetailScreenState extends State<DetailScreen> {
                         SizedBox(height: 10),
                         TextFormField(
                           controller: _Description,
+                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            hintText: widget.description,
+                            labelText: "Nomor Handphone",
                             contentPadding: EdgeInsets.all(20.0),
                           ),
                           validator: (value) {
@@ -72,29 +84,31 @@ class _DetailScreenState extends State<DetailScreen> {
                       ],
                     )),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      if (widget.index == 0 && widget.title == '') {
-                        Provider.of<ListProvider>(context, listen: false)
-                            .addItem(_Title.text, _Description.text);
-                      } else {
-                        Provider.of<ListProvider>(context, listen: false)
-                            .updateItem(
-                                widget.index, _Title.text, _Description.text);
-                      }
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (context) => BaseScreen(
-                                  title: _Title.text,
-                                  description: _Description.text)),
-                          (route) => false);
-                    }
-                  },
-                  child: const Text('Simpan'),
-                ),
+              Consumer<ListProvider>(
+                builder: (context, data, child) {
+                  return !isUpdate
+                      ? ElevatedButton(
+                          onPressed: () {
+                            DynamicList newData =
+                                DynamicList(_Title.text, _Description.text);
+
+                            data.addItem(newData);
+                            Navigator.pop(context);
+                          },
+                          child: Text("Simpan"),
+                        )
+                      : ElevatedButton(
+                          onPressed: () {
+                            data.updateItem(
+                              widget.data!,
+                              _Title.text,
+                              _Description.text,
+                            );
+                            Navigator.pop(context);
+                          },
+                          child: Text("Update"),
+                        );
+                },
               ),
             ],
           ),

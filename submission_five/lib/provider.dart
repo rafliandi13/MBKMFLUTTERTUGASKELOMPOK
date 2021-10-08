@@ -12,29 +12,19 @@ class ListProvider with ChangeNotifier {
 
   String get title => title;
 
-  void addItem(String title, String description) {
-    DynamicList list = new DynamicList(title, description);
+  void addItem(DynamicList list) {
     _list.add(list);
     notifyListeners();
   }
 
-  void deleteItem(int index) {
-    _list.removeAt(index);
+  void deleteItem(DynamicList list) {
+    _list.remove(list);
     notifyListeners();
   }
 
-  bool checkList() {
-    if (_list.isEmpty) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  void updateItem(int index, String title, String description) {
-    DynamicList list = new DynamicList(title, description);
-    deleteItem(index);
-    _list.insert(index, list);
+  void updateItem(DynamicList list, String title, String description) {
+    list.title = title;
+    list.description = description;
     notifyListeners();
   }
 }

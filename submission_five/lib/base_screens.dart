@@ -6,11 +6,6 @@ import 'provider.dart';
 import 'model.dart';
 
 class BaseScreen extends StatelessWidget {
-  String title, description;
-
-  BaseScreen({Key? key, required this.title, required this.description})
-      : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,11 +38,12 @@ class BaseScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) =>
-                  DetailScreen(index: 0, title: '', description: '')));
-        },
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailScreen(),
+          ),
+        ),
         backgroundColor: Colors.white,
         child: Icon(
           Icons.add,
@@ -78,12 +74,8 @@ class CardList extends StatelessWidget {
             )),
         child: ListTile(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => DetailScreen(
-                        index: index,
-                        title: list.title,
-                        description: list.description,
-                      )));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => DetailScreen(list)));
             },
             leading: Icon(Icons.people),
             title: Text(list.title),
@@ -91,7 +83,7 @@ class CardList extends StatelessWidget {
             trailing: IconButton(
                 onPressed: () {
                   Provider.of<ListProvider>(context, listen: false)
-                      .deleteItem(index);
+                      .deleteItem(list);
                 },
                 icon: Icon(Icons.delete))),
       ),
